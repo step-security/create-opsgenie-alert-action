@@ -1,0 +1,37 @@
+name: Create OpsGenie Alert
+description: Create an OpsGenie Alert
+branding:
+  icon: "bell"
+  color: "purple"
+inputs:
+  api_key:
+    description: OpsGenie API key
+    required: true
+  alias:
+    description: Alias of the alert to close
+    required: false
+  message:
+    description: Alert's message
+    required: true
+  description:
+    description: Alert's description
+    required: false
+  source:
+    description: Alert's source. default is IP address of incoming request
+    required: false
+  priority:
+    description: Alert's priority (P1-P5)
+    required: false
+  tags:
+    description: Comma delimited list of tags
+    required: false
+  using_eu_url:
+    description: Boolean, true if using Opsgenie EU API endpoint
+    required: false
+    default: "false"
+  responders:
+    description: List of targets that the alert will be routed to
+    required: false
+runs:
+  using: "node24"
+  main: "dist/index.js"
