@@ -1,9 +1,9 @@
 const core = require("@actions/core");
 const fs = require("fs");
 const axios = require("axios");
-const opsgenie = require("opsgenie-sdk");
 const { connectionOptions } = require("./src/connection");
 const { createAlertRequestFrom } = require("./src/alert");
+const { createAlert } = require("./src/opsgenie");
 
 async function validateSubscription() {
   const eventPath = process.env.GITHUB_EVENT_PATH;
@@ -65,8 +65,9 @@ const allInputs = () => {
 async function main() {
   await validateSubscription();
 
-  opsgenie.configure(
-    connectionOptions(core.getInput("api_key"), core.getInput("using_eu_url")),
+  const connection = connectionOptions(
+    core.getInput("api_key"),
+    core.getInput("using_eu_url"),
   );
 
   const alertRequest = createAlertRequestFrom(allInputs());
@@ -74,14 +75,13 @@ async function main() {
   const { api_key: _redacted, ...loggableRequest } = alertRequest;
   console.log(`Creating alert with: ${JSON.stringify(loggableRequest)}`);
 
-  opsgenie.alertV2.create(alertRequest, function (error, result) {
-    if (error) {
-      core.setFailed(error.message);
-    } else {
-      console.log(`Request sent for creating new alert: ${result.requestId}`);
-      core.setOutput("request_id", result.requestId);
-    }
-  });
+  try {
+    const result = await createAlert(connection, alertRequest);
+    console.log(`Request sent for creating new alert: ${result.requestId}`);
+    core.setOutput("request_id", result.requestId);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }
 
 main();
