@@ -1,0 +1,27 @@
+{
+  "name": "create-opsgenie-alert-action",
+  "version": "1.4.0",
+  "main": "index.js",
+  "repository": "git@github.com:step-security/create-opsgenie-alert-action.git",
+  "author": "step-security",
+  "license": "MIT",
+  "scripts": {
+    "compile": "ncc build index.js --license licenses.txt",
+    "lint": "eslint . --ext .js",
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@actions/core": "^1.9.1",
+    "axios": "1.16.0",
+    "opsgenie-sdk": "^0.5.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.33.3",
+    "chai": "^4.3.6",
+    "eslint": "^8.7.0",
+    "mocha": "^9.2.0"
+  }
+}
