@@ -25,3 +25,9 @@ jobs:
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
+        with:
+          # Dev-only advisories from the mocha test runner (diff, serialize-javascript).
+          # These packages are NOT bundled into the shipped action (dist/) and are already
+          # at the highest versions mocha@11.7.6 ships; the fixes require major versions
+          # mocha has not yet adopted. Mirrors the ignore list in osv-scanner.toml.
+          allow-ghsas: GHSA-73rr-hh4g-fpgx, GHSA-5c6j-r48x-rmvq, GHSA-qj8w-gfj5-8c6v

@@ -1,0 +1,18 @@
+# OSV-Scanner ignore list.
+# Only dev-only dependencies that are NOT bundled into the shipped action
+# (dist/index.js) are ignored here. They are pulled in solely by `mocha`
+# (the test runner) and are already at the highest version the latest
+# mocha (11.7.6) ships; the full fixes require major versions mocha has
+# not yet adopted. They never run as part of the action.
+
+[[IgnoredVulns]]
+id = "GHSA-73rr-hh4g-fpgx"
+reason = "diff@7.0.0 — dev-only (mocha test runner), not bundled in dist/. Highest version shipped by mocha@11.7.6; fix is diff 8.x. Low severity (CVSS 2.7) ReDoS, no runtime exposure."
+
+[[IgnoredVulns]]
+id = "GHSA-5c6j-r48x-rmvq"
+reason = "serialize-javascript@6.0.2 — dev-only (mocha test runner), not bundled in dist/. Highest version shipped by mocha@11.7.6; fix is serialize-javascript 7.x. No runtime exposure."
+
+[[IgnoredVulns]]
+id = "GHSA-qj8w-gfj5-8c6v"
+reason = "serialize-javascript@6.0.2 — dev-only (mocha test runner), not bundled in dist/. Highest version shipped by mocha@11.7.6; fix is serialize-javascript 7.x. No runtime exposure."
